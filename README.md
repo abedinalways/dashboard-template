@@ -107,3 +107,4 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 2. **Add a New Role:**
    Update `AuthRole` in `src/types/auth.ts` and define its default redirect in `src/lib/auth/config.ts`.
+# dashboard-template
