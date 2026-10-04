@@ -13,6 +13,7 @@ import {
   LogOut,
   ChevronLeft,
   Layers,
+  Component,
 } from "lucide-react";
 
 export function AppSidebar() {
@@ -22,6 +23,7 @@ export function AppSidebar() {
 
   const adminNavItems = [
     { label: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
+    { label: "Component Library", href: "/admin/dashboard/components", icon: Component },
     { label: "User Management", href: "/admin/dashboard/users", icon: Users },
     { label: "System Settings", href: "/admin/dashboard/settings", icon: Settings },
   ];
