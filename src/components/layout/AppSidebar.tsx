@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   Users,
   Settings,
-  ShieldAlert,
   LogOut,
   ChevronLeft,
   Layers,
@@ -52,37 +51,54 @@ export function AppSidebar() {
           isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
+        {/* Floating Toggle Button on the Right Border (Desktop) */}
+        <button
+          type="button"
+          onClick={toggleSidebar}
+          className="hidden lg:flex absolute -right-3 top-5 z-50 h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xs hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-200 cursor-pointer"
+          title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
+        >
+          <ChevronLeft
+            className={cn(
+              "w-3.5 h-3.5 transition-transform duration-300",
+              !isExpanded && "rotate-180"
+            )}
+          />
+        </button>
+
         {/* Brand Header */}
-        <div className="flex items-center justify-between h-16 px-4 border-b border-gray-100 dark:border-gray-800">
-          <Link href="/" className="flex items-center gap-3 overflow-hidden">
+        <div
+          className={cn(
+            "flex items-center h-16 border-b border-gray-100 dark:border-gray-800 transition-all duration-300",
+            isExpanded ? "justify-start px-4" : "justify-center px-0"
+          )}
+        >
+          <Link
+            href="/"
+            className={cn(
+              "flex items-center gap-3 overflow-hidden",
+              !isExpanded && "justify-center w-full"
+            )}
+          >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-600 text-white shadow-xs font-bold text-lg">
-              <Layers className="w-5 h-5" />
+              <Layers className="w-5 h-5 shrink-0" />
             </div>
+
             {isExpanded && (
               <div className="flex flex-col truncate">
-                <span className="font-bold text-sm tracking-tight text-gray-900 dark:text-white">
+                <span className="font-bold text-sm tracking-tight text-gray-900 dark:text-white truncate">
                   DashTemplate
                 </span>
-                <span className="text-[11px] text-gray-400 font-medium">
+                <span className="text-[11px] text-gray-400 font-medium truncate">
                   {role === "ADMIN" ? "Admin Portal" : "User Portal"}
                 </span>
               </div>
             )}
           </Link>
-
-          <button
-            type="button"
-            onClick={toggleSidebar}
-            className="hidden lg:flex p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          >
-            <ChevronLeft
-              className={cn("w-4 h-4 transition-transform duration-300", !isExpanded && "rotate-180")}
-            />
-          </button>
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
+        <nav className="flex-1 px-3 py-4 space-y-2 overflow-y-auto custom-scrollbar">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -95,11 +111,18 @@ export function AppSidebar() {
                 className={cn(
                   "menu-item",
                   isActive ? "menu-item-active" : "menu-item-inactive",
-                  !isExpanded && "justify-center px-0"
+                  !isExpanded && "w-10 h-10 p-0 mx-auto justify-center rounded-xl"
                 )}
                 title={!isExpanded ? item.label : undefined}
               >
-                <Icon className={cn("w-5 h-5 shrink-0", isActive ? "text-brand-600 dark:text-brand-400" : "text-gray-500")} />
+                <Icon
+                  className={cn(
+                    "w-5 h-5 shrink-0",
+                    isActive
+                      ? "text-brand-600 dark:text-brand-400"
+                      : "text-gray-500"
+                  )}
+                />
                 {isExpanded && <span className="truncate">{item.label}</span>}
               </Link>
             );
@@ -127,7 +150,7 @@ export function AppSidebar() {
             onClick={logout}
             className={cn(
               "flex items-center w-full gap-3 px-3 py-2 text-xs font-medium rounded-xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer",
-              !isExpanded && "justify-center px-0"
+              !isExpanded && "w-10 h-10 p-0 mx-auto justify-center rounded-xl"
             )}
             title={!isExpanded ? "Log out" : undefined}
           >
