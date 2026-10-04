@@ -40,8 +40,8 @@ export const useAuth = () => {
    * Mock login helper for testing and rapid development without backend
    */
   const handleMockLogin = (mockRole: "ADMIN" | "USER" = "ADMIN") => {
-    const dummyToken = "mock_jwt_token_for_template_testing";
-    const dummyRefreshToken = "mock_refresh_token_for_template_testing";
+    const dummyToken = `mock_token_${mockRole}`;
+    const dummyRefreshToken = `mock_refresh_token_${mockRole}`;
     const mockUser = {
       id: "mock-1",
       name: mockRole === "ADMIN" ? "Super Admin" : "Standard User",
@@ -61,7 +61,7 @@ export const useAuth = () => {
 
   const handleLogout = async () => {
     try {
-      if (token) {
+      if (token && !token.startsWith("mock_token_")) {
         await logoutTrigger().unwrap();
       }
     } catch {

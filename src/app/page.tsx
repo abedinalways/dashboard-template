@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/src/hooks/useAuth";
 import { getDefaultRouteForRole } from "@/src/lib/auth/config";
 import { Button } from "@/src/components/ui/Button";
-import { Shield, User, ArrowRight, LayoutDashboard, Sparkles, CheckCircle2 } from "lucide-react";
+import { Shield, User, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -14,13 +14,13 @@ export default function HomePage() {
 
   useEffect(() => {
     if (isAuthenticated && role) {
-      router.replace(getDefaultRouteForRole(role));
+      window.location.href = getDefaultRouteForRole(role);
     }
-  }, [isAuthenticated, role, router]);
+  }, [isAuthenticated, role]);
 
   const handleQuickDemo = (demoRole: "ADMIN" | "USER") => {
     mockLogin(demoRole);
-    router.push(getDefaultRouteForRole(demoRole));
+    window.location.href = getDefaultRouteForRole(demoRole);
   };
 
   return (

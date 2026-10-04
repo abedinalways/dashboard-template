@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/src/hooks/useAuth";
 import { Button } from "@/src/components/ui/Button";
 import { Input } from "@/src/components/ui/Input";
@@ -11,7 +10,6 @@ import { Lock, Mail, Shield, User, Layers, Info } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function LoginPage() {
-  const router = useRouter();
   const { login, mockLogin, isLoading } = useAuth();
 
   const [email, setEmail] = useState("admin@dashboard.com");
@@ -20,7 +18,9 @@ export default function LoginPage() {
   const handleQuickLogin = (role: "ADMIN" | "USER") => {
     mockLogin(role);
     toast.success(`Signed in as ${role}!`);
-    router.push(getDefaultRouteForRole(role));
+    const target = getDefaultRouteForRole(role);
+    // Hard navigate to ensure cookies are sent with HTTP headers to Next.js proxy
+    window.location.href = target;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,10 +44,9 @@ export default function LoginPage() {
     try {
       await login({ email, password });
       toast.success("Login successful via API!");
-      router.push("/admin/dashboard");
+      window.location.href = "/admin/dashboard";
     } catch {
-      // If backend is offline, inform user and allow fallback
-      toast.error("Backend API is offline. Using Demo login credentials instead!");
+      toast.error("Backend API offline. Logging in with Demo credentials!");
       handleQuickLogin("ADMIN");
     }
   };
